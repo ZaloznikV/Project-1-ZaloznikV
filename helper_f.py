@@ -96,8 +96,10 @@ Lines = file.readlines()
 site_url = "https://www.rtvslo.si/slovenija/skupaj-naprej-v-premagovanje-epidemije/600811"
 #site_url = line potem ko bo v for zanki
 
+
+
 def get_article_data(site_url):
-    """Get data from article in format (authors, title, subtitle, date, hour, change, article_tags, section_tag) """
+    """Get data from article in format (authors, title, subtitle, date, hour, change, article_tags, section_tag, text ) """
     
     
     options = webdriver.ChromeOptions()
@@ -158,6 +160,17 @@ def get_article_data(site_url):
     section_tag = section_tag_a.get_attribute('aria-label')
     print("Section tag is: ", section_tag)
     time.sleep(1)
+    
+    
+    body = driver.find_element_by_class_name("article-body")
+    bbody = body.find_elements_by_tag_name("p")
+    text = []
+    for b in bbody:
+        text.append(b.text)
+    
+    text = " ".join(text)
+
+    #print(text)
       
     
     # driver.execute_script("window.scrollTo(0, document.body.scrollHeight)") #scroll to bottom of the page
@@ -171,7 +184,7 @@ def get_article_data(site_url):
     
     driver.quit()
     print("########")
-    return (authors, title, subtitle, date, hour, change, article_tags, section_tag)
+    return (authors, title, subtitle, date, hour, change, article_tags, section_tag, text)
 
 
 
