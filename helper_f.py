@@ -180,8 +180,7 @@ def get_article_data(site_url):
 #for comments only
 
 def get_article_comments(site_url):
-    """Get all comments in format (author, hour_date, grade, text, is_reply)  in format 
-    (author, title, subtitle, date, hour, change, article_tags, section_tag, text, comments) """
+    """Get all comments in format (author, hour_date, grade, text, is_reply)"""
     
     
     options = webdriver.ChromeOptions()
@@ -255,83 +254,6 @@ def get_article_comments(site_url):
     
     driver.quit()
     return all_comments
-
-
-def change_day_published(date_published):
-    """function changes date from DD."month".YYYY do DD.MM.YYYY format"""
-    
-    dic_month = {"januar": "1", "January": "1", "fabruar": "2", "Fabruary": "2","marec": "3", "March": "3", "april": "5", "April": "4","maj": "5", "May": "5","junij": "6", "June": "6","julij": "7", "July": "7","avgust": "8", "August": "8","september": "9", "September": "9","oktober": "10", "October": "10","november": "11", "November": "11","december": "12", "December": "12", "gennaio": "1", "febbraio": "2","marzo": "3", "aprile": "4","maggio" : "5", "giugno":"6","luglio": "7", "agosto":"8","settembre": "9", "ottobre":"10","novembre": "11", "dicembre": "12","Gennaio": "1", "Febbraio": "2","Marzo": "3", "Aprile": "4","Maggio" : "5", "Giugno":"6","Luglio": "7", "Agosto":"8","Settembre": "9", "Ottobre":"10", "Novembre": "11", "Dicembre": "12"} #slo, eng ita
-
-    
-   
-    #"23. marec 2021" example
-    splitted = date_published.split(" ")
-    if len(splitted) > 1: #in format DD. "month" YYYY
-        date = date_published.replace(".", "")
-        splitted = date.split(" ")
-        splitted[1] = dic_month[splitted[1]]
-        date_published = ".".join(splitted)
-    return date_published
-        
-        
-        
-    
-
-
-def edit_and_join():
-    """function for editing some typos in scraped data without having to scrap and wait again"""
-
-    for i in range(1000):
-        if os.path.isfile('json/{}.json'.format(i)):
-            #print("Working with file: ", i)
-        
-            a_file = open('json/{}.json'.format(i), "r", encoding='utf-8')
-            json_object = json.load(a_file)
-            a_file.close()
-            #print(json_object)
-            
-            
-            new_comments = []
-            json_object["day_published"] = change_day_published( json_object["day_published"] )
-            if json_object["hour_publishet"] != None:
-                json_object['hour_published'] = json_object.pop("hour_publishet")[1:]
-            else:
-                json_object['hour_published'] = json_object.pop("hour_publishet")
-            comments = json_object["comments"]
-            if comments != []:
-                for comment in comments:
-                    date_hour = comment["date_hour"]
-                    splitted = date_hour.split(" ")
-                    date = "".join(splitted[1:4])
-                    hour = splitted[4]
-                    comment["date_hour"] = [date, hour]
-   
-                #print(json_object)
-            else: 
-                pass
-
-                
-                
-            
-            a_file = open('edited_json_files/{}_edited.json'.format(i), "w", encoding='utf-8')
-            json.dump(json_object, a_file, ensure_ascii=False)
-            a_file.close()
-            
-    all_data_list = []
-    for i in range(1000):
-        if os.path.isfile('edited_json_files/{}_edited.json'.format(i)):
-            #print("Working with file: ", i)
-            a_file = open('edited_json_files/{}_edited.json'.format(i), "r", encoding='utf-8')
-            json_object = json.load(a_file)
-            a_file.close()
-            all_data_list.append(json_object)
-    
-    #print(all_data_list)
-    
-    a_file = open('data.json', "w", encoding='utf-8')
-    json.dump(all_data_list, a_file, ensure_ascii=False)
-    a_file.close()
-    return("Done")
 
 
 def get_data_skit(site_url):
@@ -510,6 +432,90 @@ def make_json_format(authors, title, subtitle, date, hour, change, article_tags,
     #print(line_data)
         
     return line_data
+
+
+
+
+
+def change_day_published(date_published): #just for editing data 
+    """function changes date from DD."month".YYYY do DD.MM.YYYY format"""
+    
+    dic_month = {"januar": "1", "January": "1", "fabruar": "2", "Fabruary": "2","marec": "3", "March": "3", "april": "5", "April": "4","maj": "5", "May": "5","junij": "6", "June": "6","julij": "7", "July": "7","avgust": "8", "August": "8","september": "9", "September": "9","oktober": "10", "October": "10","november": "11", "November": "11","december": "12", "December": "12", "gennaio": "1", "febbraio": "2","marzo": "3", "aprile": "4","maggio" : "5", "giugno":"6","luglio": "7", "agosto":"8","settembre": "9", "ottobre":"10","novembre": "11", "dicembre": "12","Gennaio": "1", "Febbraio": "2","Marzo": "3", "Aprile": "4","Maggio" : "5", "Giugno":"6","Luglio": "7", "Agosto":"8","Settembre": "9", "Ottobre":"10", "Novembre": "11", "Dicembre": "12"} #slo, eng ita
+
+    
+   
+    #"23. marec 2021" example
+    splitted = date_published.split(" ")
+    if len(splitted) > 1: #in format DD. "month" YYYY
+        date = date_published.replace(".", "")
+        splitted = date.split(" ")
+        splitted[1] = dic_month[splitted[1]]
+        date_published = ".".join(splitted)
+    return date_published
+        
+        
+        
+    
+
+
+def edit_and_join():
+    """function for editing some typos in scraped data without having to scrap and wait again"""
+
+    for i in range(1000): #max number of articles that can be obtained from rtvslo
+        if os.path.isfile('json/{}.json'.format(i)):
+            #print("Working with file: ", i)
+        
+            a_file = open('json/{}.json'.format(i), "r", encoding='utf-8')
+            json_object = json.load(a_file)
+            a_file.close()
+            #print(json_object)
+            
+            
+            new_comments = []
+            json_object["day_published"] = change_day_published( json_object["day_published"] )
+            if json_object["hour_publishet"] != None:
+                json_object['hour_published'] = json_object.pop("hour_publishet")[1:]
+            else:
+                json_object['hour_published'] = json_object.pop("hour_publishet")
+                json_object['content'] = json_object['content'].replace("\n", "")
+                json_object['content'] = json_object['content'].replace('\"', "")
+
+            comments = json_object["comments"]
+            if comments != []:
+                for comment in comments:
+                    date_hour = comment["date_hour"]
+                    splitted = date_hour.split(" ")
+                    date = "".join(splitted[1:4])
+                    hour = splitted[4]
+                    comment["date_hour"] = [date, hour]
+   
+                #print(json_object)
+            else: 
+                pass
+
+                
+                
+            
+            a_file = open('edited_json_files/{}_edited.json'.format(i), "w", encoding='utf-8')
+            json.dump(json_object, a_file, ensure_ascii=False)
+            a_file.close()
+            
+    all_data_list = []
+    for i in range(1000):
+        if os.path.isfile('edited_json_files/{}_edited.json'.format(i)):
+            #print("Working with file: ", i)
+            a_file = open('edited_json_files/{}_edited.json'.format(i), "r", encoding='utf-8')
+            json_object = json.load(a_file)
+            a_file.close()
+            all_data_list.append(json_object)
+    
+    #print(all_data_list)
+    
+    a_file = open('data.json', "w", encoding='utf-8')
+    json.dump(all_data_list, a_file, ensure_ascii=False)
+    a_file.close()
+    return("Done")
+
 
 
         
