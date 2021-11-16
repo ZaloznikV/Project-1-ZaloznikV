@@ -382,7 +382,7 @@ def get_data_skit(site_url):
     return (author, title, subtitle, date, hour, change, article_tags, section_tag, text, comments)
                 
 def get_data_dostopno(site_url):
-    """Function gets article data from special skit article"""
+    """Function gets article data from special dostopno article"""
     options = webdriver.ChromeOptions()
     options.add_argument('window-size=2880,1800')
     options.add_argument("--start-maximized") #so I can see it in fullscreen on laptop
@@ -432,7 +432,7 @@ def get_data_dostopno(site_url):
 
 
 def get_data_enostavno(site_url):
-    """Function gets article data from special skit article"""
+    """Function gets article data from special enostavno article"""
     options = webdriver.ChromeOptions()
     options.add_argument('window-size=2880,1800')
     options.add_argument("--start-maximized") #so I can see it in fullscreen on laptop
@@ -482,6 +482,7 @@ def get_data_enostavno(site_url):
 
 
 def make_json_format(authors, title, subtitle, date, hour, change, article_tags, section_tag, text, comments):
+    """function that create json file of arguments of single article"""
     line_data = {}
     line_comments = []
     
