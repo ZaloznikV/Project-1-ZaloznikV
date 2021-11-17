@@ -437,7 +437,7 @@ def make_json_format(authors, title, subtitle, date, hour, change, article_tags,
 
 
 
-def change_day_published(date_published): #just for editing data 
+def change_day_published(date_published): #just for editing data to be in same format
     """function changes date from DD."month".YYYY do DD.MM.YYYY format"""
     
     dic_month = {"januar": "1", "January": "1", "fabruar": "2", "Fabruary": "2","marec": "3", "March": "3", "april": "5", "April": "4","maj": "5", "May": "5","junij": "6", "June": "6","julij": "7", "July": "7","avgust": "8", "August": "8","september": "9", "September": "9","oktober": "10", "October": "10","november": "11", "November": "11","december": "12", "December": "12", "gennaio": "1", "febbraio": "2","marzo": "3", "aprile": "4","maggio" : "5", "giugno":"6","luglio": "7", "agosto":"8","settembre": "9", "ottobre":"10","novembre": "11", "dicembre": "12","Gennaio": "1", "Febbraio": "2","Marzo": "3", "Aprile": "4","Maggio" : "5", "Giugno":"6","Luglio": "7", "Agosto":"8","Settembre": "9", "Ottobre":"10", "Novembre": "11", "Dicembre": "12"} #slo, eng ita
@@ -483,19 +483,31 @@ def edit_and_join():
             comments = json_object["comments"]
             if comments != []:
                 for comment in comments:
-                    date_hour = comment["date_hour"]
+                    date_hour = comment["date_hour"]  
                     splitted = date_hour.split(" ")
                     date = "".join(splitted[1:4])
                     hour = splitted[4]
+                    day_month_year = date.split(".") #adjusting month to pandas format
+                    if len(day_month_year[0]) == 1:
+                        day_month_year[0] = "0" + day_month_year[0]
+                    if len(day_month_year[1]) == 1:
+                        day_month_year[1] = "0" + day_month_year[1]
+                   
+                    date = ".".join(day_month_year)
                     comment["date_hour"] = [date, hour]
    
-                #print(json_object)
-            else: 
-                pass
-
-                
-                
             
+            if json_object["day_published"][-1] == ".":
+                json_object["day_published"] = json_object["day_published"][:-1]
+                
+            day_month_year = json_object["day_published"].split(".") #adjusting month to pandas format
+            if len(day_month_year[0]) == 1:
+                day_month_year[0] = "0" + day_month_year[0]
+            if len(day_month_year[1]) == 1:
+                day_month_year[1] = "0" + day_month_year[1]
+                   
+            json_object["day_published"] = ".".join(day_month_year)
+                      
             a_file = open('edited_json_files/{}_edited.json'.format(i), "w", encoding='utf-8')
             json.dump(json_object, a_file, ensure_ascii=False)
             a_file.close()
@@ -512,7 +524,7 @@ def edit_and_join():
     #print(all_data_list)
     
     a_file = open('data.json', "w", encoding='utf-8')
-    json.dump(all_data_list, a_file, ensure_ascii=False)
+    json.dump(all_data_list, a_file , ensure_ascii=False)
     a_file.close()
     return("Done")
 

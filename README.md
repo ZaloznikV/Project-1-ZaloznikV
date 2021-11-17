@@ -14,6 +14,8 @@ More detailed instructioins are in notebook but basic commands for environment s
 - conda install pandas
 - conda install requests
 - conda install numpy
+- conda install matplotlib
+- conda install scipy
 
 ## Notebook overwiev
 In the first part is more detailed procedure how to set up environment. In second, web scraping part, is detailed descriptions of functions and how is data collected.
