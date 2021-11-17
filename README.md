@@ -24,4 +24,6 @@ store it into single json file, edit json files and join them into one final dat
 ## Aditional instructions
 Scraping can take a lot of time so be carefull when collecting article urls again and then trying to scrape them. There could also be some new web page formats that were missed
 in my sub 1000 articles and so could trigger some errors. Scraper also checks whether some articles were already scraped but unfortunately not by some specific article ID. 
-Checking is very useful in case of some interuptions. But after collecting new urls and trying to scrape them .json files from old ones have to be deleted not to cause any problems.
+Checking is very useful in case of some interuptions. But after collecting new urls and before trying to scrape them .json files from old ones have to be deleted not to cause any problems.
+Old .json files from existing data can be found in single_article_json_files.rar and should be extracted if you don't want to scrape all articles again. 
+After extracting you can also delete just some of the files to see how scraping works but still don't have to wait so long. 
