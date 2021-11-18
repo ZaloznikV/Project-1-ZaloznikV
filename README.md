@@ -39,14 +39,14 @@ store it into single json file, edit json files and join them into one final dat
     "comments": [
         {
             "user": "user_name",
-            "date_hour": ["DD.MM.YYYY"; "MM:HH"],
+            "date_hour": ["DD.MM.YYYY"; "HH:MM"],
             "grade": comment_grade(int),
             "reply": "YES"/"NO",
             "comment": "comment_text",
 
         },...
     ],
-    "hour_published": "MM:HH"
+    "hour_published": "HH:MM"
     
   }, 
   {
