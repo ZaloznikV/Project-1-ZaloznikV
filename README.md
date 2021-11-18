@@ -1,9 +1,9 @@
 # Project 1: Web scraping and basic summarization
 
-The goal of this Project is to extract posts from the RTVSlo.si or 24ur.com, related to "koronavirus" keyword and visualize data.
+The goal of this Project was to extract posts from the RTVSlo.si or 24ur.com, related to "koronavirus" keyword and visualize data.
 
 ## Environment setup. 
-More detailed instructioins are in notebook but basic commands for environment setup after installing conda are:
+You can find more detailed instructions in the Jupyter Notebook while the basic commands for environment setup after installing conda are:
 
 - conda create --name <your_env_name>
 - conda activate <your_env_name>
@@ -19,9 +19,9 @@ More detailed instructioins are in notebook but basic commands for environment s
 - conda install seaborn
 
 ## Notebook overwiev
-In the first part is more detailed procedure how to set up environment. In second, web scraping part, is detailed descriptions of functions and how is data collected.
-But main idea is to first simulate searching by key "koronavirus", collect articles urls into article_urls.txt file , get data from each url based on web page specifics, 
-store it into single json file, edit json files and join them into one final data.json file. In third part of notebook are some visualizations from scraped data.
+The first part shows more detailed procedure on how to set up the environment. In the second, web scraping part, are detailed descriptions of functions and how data is collected.
+The main idea is to first simulate searching by key "koronavirus", collect article URLs into article_urls.txt file, get data from each URL based on the web page specifics, 
+store them into the single json file, edit json files and join them into one final data.json file. In third part of notebook are some visualizations from scraped data.
 
 ## JSON Schema:
 
@@ -39,14 +39,14 @@ store it into single json file, edit json files and join them into one final dat
     "comments": [
         {
             "user": "user_name",
-            "date_hour": ["DD.MM.YYYY"; "HH:MM"],
+            "date_hour": ["DD.MM.YYYY"; "MM:HH"],
             "grade": comment_grade(int),
             "reply": "YES"/"NO",
             "comment": "comment_text",
 
         },...
     ],
-    "hour_published": "HH:MM"
+    "hour_published": "MM:HH"
     
   }, 
   {
@@ -58,8 +58,8 @@ store it into single json file, edit json files and join them into one final dat
 
 
 ## Aditional instructions
-Scraping can take a lot of time so be carefull when collecting article urls again and then trying to scrape them. There could also be some new web page formats that were missed
-in my sub 1000 articles and so could trigger some errors. Scraper also checks whether some articles were already scraped but unfortunately not by some specific article ID. 
+Scraping can take a lot of time, so be careful when collecting article URLs again and then trying to scrape them. There could also be some new web page formats that weren't included
+in my sub 1000 articles and that could trigger some errors. Scraper can aslo check whether some articles were already scraped but unfortunately not by some specific article ID. 
 Checking is very useful in case of some interuptions. But after collecting new urls and before trying to scrape them .json files from old ones have to be deleted not to cause any problems.
 Old .json files from existing data can be found in single_article_json_files.rar and should be extracted if you don't want to scrape all articles again. 
-After extracting you can also delete just some of the files to see how scraping works but still don't have to wait so long. 
+After extracting data you can delete some of the files, to see how the scraping works, so you don't have to wait that long. 
