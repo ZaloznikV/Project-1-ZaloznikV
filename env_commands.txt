@@ -1,7 +1,0 @@
-conda activate upv-project_1
-conda install python
-conda install selenium
-conda install jupyter notebook
-ipython kernel install --name "upv-project_1" --user
-conda install pandas
-conda install requests
