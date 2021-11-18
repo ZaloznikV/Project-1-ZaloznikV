@@ -16,11 +16,45 @@ More detailed instructioins are in notebook but basic commands for environment s
 - conda install numpy
 - conda install matplotlib
 - conda install scipy
+- conda install seaborn
 
 ## Notebook overwiev
 In the first part is more detailed procedure how to set up environment. In second, web scraping part, is detailed descriptions of functions and how is data collected.
 But main idea is to first simulate searching by key "koronavirus", collect articles urls into article_urls.txt file , get data from each url based on web page specifics, 
 store it into single json file, edit json files and join them into one final data.json file. In third part of notebook are some visualizations from scraped data.
+
+## JSON Schema:
+
+```
+[
+  {
+    "author": ["author_1", "author_2",...],
+    "day_published": "DD.MM.YYYY",
+    "changed_later": "YES"/"NO", 
+    "title": "article_title",
+    "subtitle": "article_subtitle",
+    "tags": ["tag_1", "tag_2",...],
+    "section_tag": "section_tag"
+    "content": "article_text",
+    "comments": [
+        {
+            "user": "user_name",
+            "date_hour": ["DD.MM.YYYY"; "MM:HH"],
+            "grade": comment_grade(int),
+            "reply": "YES"/"NO",
+            "comment": "comment_text",
+
+        },...
+    ],
+    "hour_published": "MM:HH"
+    
+  }, 
+  {
+    ...
+]
+
+
+```
 
 
 ## Aditional instructions
